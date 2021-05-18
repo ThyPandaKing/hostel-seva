@@ -1,12 +1,13 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NavBar from './Components/Navbar';
-import Home from './Home';
-import Mess from './Mess';
-import Canteen from './Canteen';
-import Sports from './Sports';
-import Rooms from './Rooms';
-import WashingMachine from './Washing-machine';
+import Home from './Components/Home/Home';
+import Mess from './Components/Mess/Mess';
+import Canteen from './Components/Canteen/Canteen';
+import Sports from './Components/Sports/Sports';
+import Rooms from './Components/Rooms/Rooms';
+import WashingMachine from './Components/WashingMachine/Washing-machine';
+import Footer from './Components/Footer';
 
 function App () {
   return (
@@ -35,6 +36,7 @@ function App () {
           </Route>
 
         </Switch>
+        <Footer />
       </div>
     </Router>
   );

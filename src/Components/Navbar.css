@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  background-color: rgba(84, 59, 247, 0.835);
   padding: 10px;
 }
 
