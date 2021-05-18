@@ -9,10 +9,15 @@
 .Navbar a {
   text-decoration: none;
   color: aliceblue;
+  margin-left: 10px;
 }
 
 .Navbar a:hover {
   color: rgba(240, 248, 255, 0.671);
   text-decoration: underline;
   cursor: pointer;
+}
+
+.links-navbar {
+  align-content: flex-end;
 }
