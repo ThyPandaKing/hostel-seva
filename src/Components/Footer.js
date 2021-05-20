@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer
       style={{backgroundColor: '#343a40'}}
-      className="page-footer font-small fixed-bottom"
+      className="page-footer font-small"
     >
 
       <div className="container">
