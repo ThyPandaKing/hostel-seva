@@ -1,6 +1,6 @@
 import Schedule from './Schedule';
 import Complaints from './Complaints';
-
+import './mess.css';
 const Mess = () => {
   return (
     <div className="p-2">
@@ -27,7 +27,7 @@ const Mess = () => {
       <div className="container  ">
         <h2>Extras</h2>
         <hr />
-        <div className="container overflow-y-scroll">
+        <div className="container">
           <div className="d-flex p-2 justify-content-around bg-secondary rounded">
             <div className="p-2 text-white text-bold">
               <strong>Something Delicious</strong>
