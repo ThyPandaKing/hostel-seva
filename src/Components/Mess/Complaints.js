@@ -25,7 +25,7 @@ const Complaints = () => {
   return (
     <div className="container p-2">
       <div className="d-flex mx-2">
-        <div className="complaint p-2 border border-bottom-0 rounded-top" onClick = {() => {change("complaint")}}>Complaint</div>
+        <div className="complaint p-2 bd-highlight border border-bottom-0 rounded-top" onClick = {() => {change("complaint")}}>Complaint</div>
         <div className="review p-2 border-bottom-0 rounded-top" onClick = {() => {change("review")}}>Review</div>
       </div>
       <div className="input-block mx-2 p-2 bd-highlight border-0">

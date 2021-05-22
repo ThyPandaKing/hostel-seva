@@ -3,9 +3,9 @@ import Complaints from './Complaints';
 import './mess.css';
 const Mess = () => {
   return (
-    <div className="p-2">
+    <div className="p-2 container-lg">
       {/* Waste-o-meter */}
-      <div className="waste-o-meter container p-2  ">
+      <div className="waste-o-meter container p-2 ">
         <h2>Waste-o-meter</h2>
         <hr />
         <div className="progress m-3" style={{height: '25px'}}>
@@ -24,7 +24,7 @@ const Mess = () => {
       <Schedule />
       <br />
       {/* Mess Food  */}
-      <div className="container  ">
+      <div className="container">
         <h2>Extras</h2>
         <hr />
         <div className="container">
