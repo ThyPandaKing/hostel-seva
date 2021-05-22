@@ -11,7 +11,7 @@
 - Mess
   - Wastageometer
   - Schedule
-  - Mess Food (paisa wala)
+  - Mess Food (Extras)
   - Complaints
   - Daily Reviews
 - Rooms
@@ -33,7 +33,7 @@
 
 - Footer
 - Feedback form
-- Feedback form visvaliser
+- Feedback form visualiser
 
 ### Complaints can be supported by likes
 
