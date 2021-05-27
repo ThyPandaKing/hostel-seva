@@ -6,8 +6,8 @@ import Mess from './Components/Mess/Mess';
 import Canteen from './Components/Canteen/Canteen';
 import Sports from './Components/Sports/Sports';
 import Rooms from './Components/Rooms/Rooms';
-import WashingMachine from './Components/WashingMachine/Washing-machine';
 import Footer from './Components/Footer';
+import ComplaintList from './Components/Complaints/ComplaintList';
 
 function App () {
   return (
@@ -28,11 +28,12 @@ function App () {
           <Route exact path="/sports">
             <Sports />
           </Route>
-          <Route exact path="/washing-machine">
-            <WashingMachine />
-          </Route>
+
           <Route exact path="/canteen">
             <Canteen />
+          </Route>
+          <Route exact path="/complaints">
+            <ComplaintList />
           </Route>
 
         </Switch>

@@ -1,5 +1,5 @@
 import Schedule from './Schedule';
-import Complaints from './Complaints';
+import Complaints from '../Complaints/Complaints';
 import './mess.css';
 const Mess = () => {
   return (
@@ -37,8 +37,13 @@ const Mess = () => {
         </div>
       </div>
       <br />
-      {/* Complaint / Review */}
-      <Complaints />
+      {/* Complaint
+        
+        from which user to which user... now in mess it will from user to admin
+
+        */}
+
+      <Complaints from_User="Aditya" to_Admin="Mess Sec" />
     </div>
   );
 };
