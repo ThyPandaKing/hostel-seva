@@ -5,6 +5,7 @@ let ComplaintData = [
     fromUser: 'Aditya',
     toAdmin: 'Gandu Nath',
     Likes: 0,
+    DisLikes: 0,
     id: 1,
   },
   {
@@ -13,6 +14,7 @@ let ComplaintData = [
     fromUser: 'Aditya',
     toAdmin: 'Gandu Nath',
     Likes: 0,
+    DisLikes: 0,
     id: 2,
   },
   {
@@ -21,6 +23,7 @@ let ComplaintData = [
     fromUser: 'Aditya',
     toAdmin: 'Gandu Nath',
     Likes: 0,
+    DisLikes: 0,
     id: 3,
   },
 ];

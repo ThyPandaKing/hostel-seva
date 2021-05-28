@@ -2,26 +2,31 @@ import {Button} from 'react-bootstrap';
 import {useState} from 'react';
 import ComplaintData from './ComplaintData';
 
-const Complaints = ({from_User, to_Admin}) => {
+const Complaints = ({from_User}) => {
   const [title, setTitle] = useState ('');
   const [complaint, setComplaint] = useState ('');
   const [fromUser, setFromUser] = useState (from_User);
-  const [toAdmin, setToAdmin] = useState (to_Admin);
+  const [toAdmin, setToAdmin] = useState ('General Sec');
 
   const initialState = () => {
     setFromUser (from_User);
-    setToAdmin (to_Admin);
+    setToAdmin ('');
     setTitle ('');
     setComplaint ('');
   };
 
   const AddPost = () => {
+    if (!(title && complaint && fromUser && toAdmin)) {
+      return;
+    }
+
     ComplaintData.push ({
       title,
       complaint,
       fromUser,
       toAdmin,
       Likes: 0,
+      DisLikes: 0,
       id: new Date ().getTime ().toString (),
     });
 
@@ -49,7 +54,7 @@ const Complaints = ({from_User, to_Admin}) => {
             onChange={e => setTitle (e.target.value)}
           />
         </div>
-        <div className="input-group mb-3">
+        <div className="input-group mb-2">
           <textarea
             className="form-control"
             aria-label="With textarea"
@@ -57,9 +62,22 @@ const Complaints = ({from_User, to_Admin}) => {
             onChange={e => setComplaint (e.target.value)}
           />
         </div>
-        <h6>From : {fromUser}</h6>
-        <h6>To : {toAdmin}</h6>
-        <Button variant="primary" onClick={AddPost}>Post</Button>
+        <h6 className="m-2">From : {fromUser}</h6>
+
+        <div className="d-flex m-2">
+          <h6>To : </h6>
+          <select
+            className="form-control w-25 mx-2 p-0"
+            onChange={e => setToAdmin (e.target.value)}
+          >
+            <option selected>General Sec</option>
+            <option>Hostel Sec</option>
+            <option>Mess Sec</option>
+          </select>
+        </div>
+        <Button variant="primary" onClick={AddPost} className="m-2">
+          Post
+        </Button>
       </div>
     </div>
   );

@@ -15,13 +15,28 @@ const ComplaintList = () => {
 
     setList (newComplaints);
   };
+  const AddDisLikes = id => {
+    const newComplaints = List.map (data => {
+      if (data.id === id) {
+        data.DisLikes++;
+      }
+      return data;
+    });
+
+    setList (newComplaints);
+  };
 
   return (
     <div className="m-2 p-10">
 
       {List
         ? List.map (data => (
-            <ComplaintCard key={data.id} {...data} AddLikes={AddLikes} />
+            <ComplaintCard
+              key={data.id}
+              {...data}
+              AddLikes={AddLikes}
+              AddDisLikes={AddDisLikes}
+            />
           ))
         : <div>
             <h1>No Complaints , what a bless !!</h1>

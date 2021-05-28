@@ -1,5 +1,5 @@
 import {Card, Button} from 'react-bootstrap';
-import {AiFillLike} from 'react-icons/ai';
+import {AiFillDislike, AiFillLike} from 'react-icons/ai';
 
 const ComplaintCard = ({
   title,
@@ -8,6 +8,8 @@ const ComplaintCard = ({
   complaint,
   Likes,
   AddLikes,
+  DisLikes,
+  AddDisLikes,
   id,
 }) => {
   return (
@@ -19,15 +21,28 @@ const ComplaintCard = ({
           <Card.Text>
             {complaint}
           </Card.Text>
-          <Button
-            variant="success"
-            onClick={() => {
-              AddLikes (id);
-            }}
-          >
-            {Likes}
-            <AiFillLike style={{marginLeft: '5px', marginBottom: '5px'}} />
-          </Button>
+          <div>
+            <Button
+              variant="success"
+              onClick={() => {
+                AddLikes (id);
+              }}
+              className="m-2"
+            >
+              {Likes}
+              <AiFillLike style={{marginLeft: '5px', marginBottom: '5px'}} />
+            </Button>
+            <Button
+              variant="danger"
+              onClick={() => {
+                AddDisLikes (id);
+              }}
+              className="m-2"
+            >
+              {DisLikes}
+              <AiFillDislike style={{marginLeft: '5px', marginBottom: '5px'}} />
+            </Button>
+          </div>
         </Card.Body>
 
       </Card>

@@ -5,9 +5,9 @@ import Home from './Components/Home/Home';
 import Mess from './Components/Mess/Mess';
 import Canteen from './Components/Canteen/Canteen';
 import Sports from './Components/Sports/Sports';
-import Rooms from './Components/Rooms/Rooms';
 import Footer from './Components/Footer';
 import ComplaintList from './Components/Complaints/ComplaintList';
+import GoToHome from './Components/GoToHome';
 
 function App () {
   return (
@@ -22,9 +22,6 @@ function App () {
           <Route exact path="/mess">
             <Mess />
           </Route>
-          <Route exact path="/rooms">
-            <Rooms />
-          </Route>
           <Route exact path="/sports">
             <Sports />
           </Route>
@@ -35,7 +32,9 @@ function App () {
           <Route exact path="/complaints">
             <ComplaintList />
           </Route>
-
+          <Route path="/*">
+            <GoToHome />
+          </Route>
         </Switch>
         <Footer />
       </div>

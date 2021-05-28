@@ -1,7 +1,33 @@
 import Schedule from './Schedule';
 import Complaints from '../Complaints/Complaints';
 import './mess.css';
+import {useState} from 'react';
+import {Button} from 'react-bootstrap';
+import ExtraCard from './ExtraCard';
+import useCart from '../CartStuff/useCart';
+import ShowItems from '../CartStuff/ShowItems';
+
 const Mess = () => {
+  const [foodWaste, setFoodWaste] = useState ('30');
+  const [MessItemList, setMessItemList] = useState ([
+    {
+      id: 0,
+      name: 'aalo ki sabzi',
+      price: 100,
+    },
+    {
+      id: 1,
+      name: 'balle balle',
+      price: 20,
+    },
+  ]);
+  const [cart, totalPrice, AddItemToCart, RemoveItemFromCart] = useCart ({
+    ItemList: MessItemList,
+    Cart: [],
+  });
+
+  //  When we fetch data from mess backend, we will use this setFoodWaste variable too
+
   return (
     <div className="p-2 container-lg">
       {/* Waste-o-meter */}
@@ -12,38 +38,50 @@ const Mess = () => {
           <div
             className="progress-bar progress-bar-striped bg-danger"
             role="progressbar"
-            style={{width: '10%'}}
+            style={{width: `${foodWaste}%`}}
             aria-valuenow="100"
             aria-valuemin="0"
             aria-valuemax="100"
           />
         </div>
-        <p className="m-3 font-monospace">some info regarding the bar</p>
+        <h4 className="m-3 font-monospace">
+          {foodWaste}% of Food Wasted Today
+        </h4>
       </div>
       <br />
       <Schedule />
       <br />
-      {/* Mess Food  */}
+      <h3 className="m-2">
+        {' '}
+        {totalPrice === 0 ? '' : `Total Price ${totalPrice}`}
+        {' '}
+      </h3>
+      {cart.length !== 0 &&
+        <div>
+          <ShowItems
+            cart={cart}
+            AddItemToCart={AddItemToCart}
+            RemoveItemFromCart={RemoveItemFromCart}
+          />
+          <Button variant="primary" className="m-4">Order Send</Button>
+        </div>}
+
       <div className="container">
         <h2>Extras</h2>
         <hr />
-        <div className="container">
-          <div className="d-flex p-2 justify-content-around bg-secondary rounded">
-            <div className="p-2 text-white text-bold">
-              <strong>Something Delicious</strong>
-            </div>
-            <button className="btn btn-primary">I want this</button>
-          </div>
-        </div>
+        {MessItemList.map (item => (
+          <ExtraCard key={item.id} {...item} AddItemToCart={AddItemToCart} />
+        ))}
       </div>
       <br />
+
       {/* Complaint
         
         from which user to which user... now in mess it will from user to admin
 
         */}
 
-      <Complaints from_User="Aditya" to_Admin="Mess Sec" />
+      <Complaints from_User="Aditya" />
     </div>
   );
 };
