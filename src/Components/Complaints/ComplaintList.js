@@ -1,24 +1,36 @@
 import ComplaintData from './ComplaintData';
 import ComplaintCard from './ComplaintCard';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 const ComplaintList = () => {
-  const [List, setList] = useState (ComplaintData);
+  const [List, setList] = useState ([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/complaints")
+    .then(res => res.json())
+    .then(data => {
+      setList(data);
+      setLoading(false);
+    })
+    .catch(err => console.log(err))
+  },[])
 
   const AddLikes = id => {
     const newComplaints = List.map (data => {
-      if (data.id === id) {
-        data.Likes++;
+      if (data._id === id) {
+        data.likes++;
       }
       return data;
     });
 
     setList (newComplaints);
   };
-  const AddDisLikes = id => {
+  const AddDislikes = id => {
+    console.log(id)
     const newComplaints = List.map (data => {
-      if (data.id === id) {
-        data.DisLikes++;
+      if (data._id === id) {
+        data.dislikes++;
       }
       return data;
     });
@@ -27,20 +39,20 @@ const ComplaintList = () => {
   };
 
   return (
-    <div className="m-2 p-10">
-
-      {List
-        ? List.map (data => (
+    <div className="m-2 p-10 bg-highlight">
+      {
+        !loading?
+         List.map(data => (
             <ComplaintCard
-              key={data.id}
-              {...data}
+              key={data._id}
+              id={data._id}
+              data={data}
               AddLikes={AddLikes}
-              AddDisLikes={AddDisLikes}
+              AddDislikes={AddDislikes}
             />
-          ))
-        : <div>
-            <h1>No Complaints , what a bless !!</h1>
-          </div>}
+          )):
+        <h1>Loading....</h1>
+        }
     </div>
   );
 };
