@@ -64,8 +64,8 @@ const Complaints = ({from_User}) => {
         </div>
         <h6 className="m-2">From : {fromUser}</h6>
 
-        <div className="d-flex m-2">
-          <h6>To : </h6>
+        <div className="d-flex m-2 d-inline">
+          <div className="my-auto">To : </div>
           <select
             className="form-control w-25 mx-2 p-0"
             onChange={e => setToAdmin (e.target.value)}
@@ -74,10 +74,10 @@ const Complaints = ({from_User}) => {
             <option>Hostel Sec</option>
             <option>Mess Sec</option>
           </select>
+          <Button variant="primary" onClick={AddPost} className="ml-auto">
+            Post
+          </Button>
         </div>
-        <Button variant="primary" onClick={AddPost} className="m-2">
-          Post
-        </Button>
       </div>
     </div>
   );

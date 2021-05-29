@@ -4,6 +4,7 @@ import Complaints from '../Complaints/Complaints';
 import ShowItems from '../CartStuff/ShowItems';
 import {Button} from 'react-bootstrap';
 import useCart from '../CartStuff/useCart';
+import './canteen.css';
 
 const Canteen = () => {
   const [CanteenItemList, setCanteenItemList] = useState ([
@@ -22,6 +23,16 @@ const Canteen = () => {
       name: 'mix veg balle',
       price: 30,
     },
+    {
+      id: 3,
+      name: 'mix veg balle',
+      price: 30,  
+    },
+    {
+      id: 3,
+      name: 'mix veg balle',
+      price: 30,
+    },
   ]);
 
   const [cart, totalPrice, AddItemToCart, RemoveItemFromCart] = useCart ({
@@ -29,9 +40,17 @@ const Canteen = () => {
     Cart: [],
   });
 
+  const [menuSearch, setMenuSearch] = useState("");
+
+  function handleChange(){
+    var change = document.getElementById("menuInput").value;
+    setMenuSearch(change);
+  }
+
   return (
     <div className="container">
-      <h1>Canteen</h1>
+    <h1>Canteen</h1>
+    <hr />
       <h3 className="m-2">
         {' '}
         {totalPrice === 0 ? '' : `Total Price ${totalPrice}`}
@@ -47,13 +66,19 @@ const Canteen = () => {
           <Button variant="primary" className="m-4">Order Send</Button>
         </div>}
       <div className="container">
-        <h3>Menu</h3>
+        <div className="d-flex justify-content-between">
+          <h3>Menu</h3>
+          <input id = "menuInput" type="text" placeholder="Search" className="p-1" onChange={()=>{handleChange()}} value={menuSearch}></input>
+        </div>
         <hr />
-        {CanteenItemList.map (item => (
-          <CanteenMenu key={item.id} {...item} AddItemToCart={AddItemToCart} />
+        <div className="bd-highlight overflow-y-scroll menu">
+        {CanteenItemList.filter(item => item.name.toLowerCase().includes(menuSearch.toLowerCase())).map (item => (
+           <CanteenMenu key={item.id} {...item} AddItemToCart={AddItemToCart} />
         ))}
+        </div>
       </div>
 
+      <br />
       <Complaints from_User="Aditya" />
     </div>
   );

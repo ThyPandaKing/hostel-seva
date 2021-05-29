@@ -25,7 +25,13 @@ const Mess = () => {
     ItemList: MessItemList,
     Cart: [],
   });
+  const [menuSearch, setMenuSearch] = useState("");
 
+  function handleChange(){
+    var change = document.getElementById("menuInput").value;
+    setMenuSearch(change);
+  }
+  
   //  When we fetch data from mess backend, we will use this setFoodWaste variable too
 
   return (
@@ -67,13 +73,17 @@ const Mess = () => {
         </div>}
 
       <div className="container">
-        <h2>Extras</h2>
-        <hr />
-        {MessItemList.map (item => (
+        <div className="d-flex justify-content-between">
+          <h3>Extras</h3>
+          <input id = "menuInput" type="text" placeholder="Search" className="p-1" onChange={()=>{handleChange()}} value={menuSearch}></input>
+        </div>
+        <hr />    
+        {MessItemList.filter(item => item.name.toLowerCase().includes(menuSearch.toLowerCase())).map (item => (
           <ExtraCard key={item.id} {...item} AddItemToCart={AddItemToCart} />
         ))}
       </div>
-      <br />
+
+      <hr />
 
       {/* Complaint
         

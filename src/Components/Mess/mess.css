@@ -2,3 +2,8 @@
     background-color: rgba(86,61,124,0.15);
     border: 1px solid rgba(86,61,124,0.15);
 }
+
+.menu{
+    max-height: 30vh;
+    overflow-y: scroll;
+}
