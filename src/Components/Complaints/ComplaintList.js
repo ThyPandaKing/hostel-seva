@@ -1,36 +1,56 @@
 import ComplaintData from './ComplaintData';
 import ComplaintCard from './ComplaintCard';
 import {useEffect, useState} from 'react';
-
+const axios = require("axios")
 const ComplaintList = () => {
-  const [List, setList] = useState ([]);
+  const [list, setList] = useState ([]);
   const [loading, setLoading] = useState(true);
+  
 
   useEffect(() => {
-    fetch("http://localhost:4000/complaints")
-    .then(res => res.json())
-    .then(data => {
-      setList(data);
-      setLoading(false);
+    axios.get("/complaints")
+    .then(res => {
+      setList(res.data);
+      setLoading(false);    
     })
     .catch(err => console.log(err))
   },[])
 
   const AddLikes = id => {
-    const newComplaints = List.map (data => {
+    var user = sessionStorage.getItem("user")
+    const newComplaints = list.map (data => {
       if (data._id === id) {
-        data.likes++;
+        if(data.likes.includes(user)){
+          var indx = data.likes.indexOf(user);
+          data.likes.splice(indx,1);
+        }
+        else{
+          data.likes.push(user);
+        }
+        if(data.dislikes.includes(user)){
+          var indx = data.dislikes.indexOf(user);
+          data.dislikes.splice(indx,1);
+        }
       }
       return data;
     });
-
     setList (newComplaints);
   };
   const AddDislikes = id => {
-    console.log(id)
-    const newComplaints = List.map (data => {
+    var user = sessionStorage.getItem("user");
+    const newComplaints = list.map (data => {
       if (data._id === id) {
-        data.dislikes++;
+        if(data.dislikes.includes(user)){
+          var indx = data.likes.indexOf(user);
+          data.dislikes.splice(indx,1);
+        }
+        else{
+          data.dislikes.push(user);
+        }
+        if(data.likes.includes(user)){
+          var indx = data.dislikes.indexOf(user);
+          data.likes.splice(indx,1);
+        }
       }
       return data;
     });
@@ -42,7 +62,7 @@ const ComplaintList = () => {
     <div className="m-2 p-10 bg-highlight">
       {
         !loading?
-         List.map(data => (
+         list.map(data => (
             <ComplaintCard
               key={data._id}
               id={data._id}

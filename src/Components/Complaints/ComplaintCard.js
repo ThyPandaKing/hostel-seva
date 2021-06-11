@@ -6,11 +6,20 @@ const ComplaintCard = (props) => {
   var to = props.data.to;
   var title = props.data.title;
   var content = props.data.content;
-  var likes = props.data.likes;
-  var dislikes = props.data.likes;
+  var likes = props.data.likes.length;
+  var dislikes = props.data.dislikes.length;
   var id = props.id;
   var AddLikes = props.AddLikes;
   var AddDislikes = props.AddDislikes;
+  var user = sessionStorage.getItem('user');
+  var liked = false;
+  var disliked = false
+  if(props.data.likes.includes(user)){
+    liked = true;
+  }
+  if(props.data.dislikes.includes(user)){
+    disliked = true;
+  }
   return (
     <div>
       <Card className="m-3 p-3">
@@ -41,6 +50,7 @@ const ComplaintCard = (props) => {
               {dislikes}
               <AiFillDislike style={{marginLeft: '5px', marginBottom: '5px'}} />
             </Button>
+           <div> {liked|disliked?<span>You {liked?"liked":"disliked"} this</span>:null}</div>
           </div>
         </Card.Body>
 

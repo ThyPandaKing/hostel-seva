@@ -1,30 +1,30 @@
-
+// kind off redudant
 let ComplaintData = [
   {
     title: 'Ram',
     complaint: 'Project needs CSS',
-    fromUser: 'Aditya',
-    toAdmin: 'Gandu Nath',
-    Likes: 0,
-    DisLikes: 0,
+    from: 'Aditya',
+    to: 'Gandu Nath',
+    likes: [],
+    disLikes: [],
     id: 1,
   },
   {
     title: 'Shyam',
     complaint: 'Project needs Time',
-    fromUser: 'Aditya',
-    toAdmin: 'Gandu Nath',
-    Likes: 0,
-    DisLikes: 0,
+    from: 'Aditya',
+    to: 'Gandu Nath',
+    likes: [],
+    disLikes: [],
     id: 2,
   },
   {
     title: 'Ghanshyam',
     complaint: 'Project needs Backend',
-    fromUser: 'Aditya',
-    toAdmin: 'Gandu Nath',
-    Likes: 0,
-    DisLikes: 0,
+    from: 'Aditya',
+    to: 'Gandu Nath',
+    likes: [],
+    disLikes: [],
     id: 3,
   },
 ];

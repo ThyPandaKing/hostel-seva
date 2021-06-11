@@ -7,8 +7,8 @@ const complaintSchema = new Schema({
     content:    {type: String, required: true},
     from :      {type: String, required: true},
     to:         {type: String, required: true},
-    likes:      {type: Number},
-    dislikes:   {type: Number},
+    likes:      {type: [String]},
+    dislikes:   {type: [String]},
 })
 
 const Complaint = mongoose.model("complaint", complaintSchema)
