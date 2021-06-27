@@ -1,7 +1,9 @@
+import "./Footer.css"
+
 const Footer = () => {
   return (
     <footer
-      style={{backgroundColor: '#343a40'}}
+      style={{backgroundColor: '#343a40', marginBottom: 0}}
       className="page-footer font-small"
     >
 

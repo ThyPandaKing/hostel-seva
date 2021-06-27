@@ -14,6 +14,7 @@ const NavBar = () => {
             <Link to="/sports">Sports</Link>
             <Link to="/canteen">Canteen</Link>
             <Link to="/complaints">Complaints List</Link>
+            <button className="btn btn-danger logout">Logout</button>          
           </Nav>
         </Navbar.Collapse>
       </Navbar>

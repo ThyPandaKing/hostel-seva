@@ -1,5 +1,6 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route, Switch} from 'react-router-dom';
+import { useState, useEffect} from "react";
 import NavBar from './Components/Navbar';
 import Home from './Components/Home/Home';
 import Mess from './Components/Mess/Mess';
@@ -8,36 +9,39 @@ import Sports from './Components/Sports/Sports';
 import Footer from './Components/Footer';
 import ComplaintList from './Components/Complaints/ComplaintList';
 import GoToHome from './Components/GoToHome';
+import Login from "./Components/Login";
+import PrivateRoute from "./Components/PrivateRoute";
 
 function App () {
+  const [user, setUser] = useState(sessionStorage.getItem('user'));
+  
   return (
     <Router>
-      <div>
-
         <NavBar />
         <Switch>
-          <Route exact path="/">
+          <PrivateRoute exact path="/">
             <Home />
-          </Route>
-          <Route exact path="/mess">
+          </PrivateRoute>
+          <PrivateRoute exact path="/mess">
             <Mess />
-          </Route>
-          <Route exact path="/sports">
+          </PrivateRoute>
+          <PrivateRoute exact path="/sports">
             <Sports />
-          </Route>
-
-          <Route exact path="/canteen">
+          </PrivateRoute>
+          <PrivateRoute exact path="/canteen">
             <Canteen />
-          </Route>
-          <Route exact path="/complaints">
+          </PrivateRoute>
+          <PrivateRoute exact path="/complaints">
             <ComplaintList />
+          </PrivateRoute>
+          <Route path="/login">
+            <Login />
           </Route>
           <Route path="/*">
             <GoToHome />
           </Route>
         </Switch>
         <Footer />
-      </div>
     </Router>
   );
 }

@@ -1,25 +1,33 @@
 import {Card, Button} from 'react-bootstrap';
 import {AiFillDislike, AiFillLike} from 'react-icons/ai';
 
-const ComplaintCard = ({
-  title,
-  fromUser,
-  toAdmin,
-  complaint,
-  Likes,
-  AddLikes,
-  DisLikes,
-  AddDisLikes,
-  id,
-}) => {
+const ComplaintCard = (props) => {
+  var from = props.data.from;
+  var to = props.data.to;
+  var title = props.data.title;
+  var content = props.data.content;
+  var likes = props.data.likes.length;
+  var dislikes = props.data.dislikes.length;
+  var id = props.id;
+  var AddLikes = props.AddLikes;
+  var AddDislikes = props.AddDislikes;
+  var user = sessionStorage.getItem('user');
+  var liked = false;
+  var disliked = false
+  if(props.data.likes.includes(user)){
+    liked = true;
+  }
+  if(props.data.dislikes.includes(user)){
+    disliked = true;
+  }
   return (
     <div>
       <Card className="m-3 p-3">
-        <Card.Header as="h5">{fromUser} to {toAdmin} </Card.Header>
+        <Card.Header as="h5">{from} to {to} </Card.Header>
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Card.Text>
-            {complaint}
+            {content}
           </Card.Text>
           <div>
             <Button
@@ -29,19 +37,20 @@ const ComplaintCard = ({
               }}
               className="m-2"
             >
-              {Likes}
+              {likes}
               <AiFillLike style={{marginLeft: '5px', marginBottom: '5px'}} />
             </Button>
             <Button
               variant="danger"
               onClick={() => {
-                AddDisLikes (id);
+                AddDislikes (id);
               }}
               className="m-2"
             >
-              {DisLikes}
+              {dislikes}
               <AiFillDislike style={{marginLeft: '5px', marginBottom: '5px'}} />
             </Button>
+           <div> {liked|disliked?<span>You {liked?"liked":"disliked"} this</span>:null}</div>
           </div>
         </Card.Body>
 

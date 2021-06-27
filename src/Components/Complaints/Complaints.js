@@ -2,33 +2,48 @@ import {Button} from 'react-bootstrap';
 import {useState} from 'react';
 import ComplaintData from './ComplaintData';
 
+const axios = require('axios');
+
 const Complaints = ({from_User}) => {
   const [title, setTitle] = useState ('');
-  const [complaint, setComplaint] = useState ('');
-  const [fromUser, setFromUser] = useState (from_User);
-  const [toAdmin, setToAdmin] = useState ('General Sec');
+  const [content, setContent] = useState ('');
+  const [from, setFrom] = useState (from_User);
+  const [to, setTo] = useState ('General Sec');
 
   const initialState = () => {
-    setFromUser (from_User);
-    setToAdmin ('');
+    setFrom (from_User);
+    setTo ('');
     setTitle ('');
-    setComplaint ('');
+    setContent ('');
   };
 
   const AddPost = () => {
-    if (!(title && complaint && fromUser && toAdmin)) {
+    if (!(title && content && from && to)) {
       return;
     }
 
-    ComplaintData.push ({
-      title,
-      complaint,
-      fromUser,
-      toAdmin,
-      Likes: 0,
-      DisLikes: 0,
-      id: new Date ().getTime ().toString (),
-    });
+    axios.post("/complaints/addComplaint", {
+        complaint:{
+          title,
+          content,
+          to,
+          from,
+          likes:[],
+          dislikes:[],   
+        }
+      }
+    )
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+    // ComplaintData.push ({
+    //   title,
+    //   content,
+    //   from,
+    //   to,
+    //   Likes: [],
+    //   DisLikes: [],
+    //   id: new Date ().getTime ().toString (),
+    // });
 
     initialState ();
   };
@@ -58,17 +73,17 @@ const Complaints = ({from_User}) => {
           <textarea
             className="form-control"
             aria-label="With textarea"
-            value={complaint}
-            onChange={e => setComplaint (e.target.value)}
+            value={content}
+            onChange={e => setContent (e.target.value)}
           />
         </div>
-        <h6 className="m-2">From : {fromUser}</h6>
+        <h6 className="m-2">From : {from}</h6>
 
         <div className="d-flex m-2 d-inline">
           <div className="my-auto">To : </div>
           <select
             className="form-control w-25 mx-2 p-0"
-            onChange={e => setToAdmin (e.target.value)}
+            onChange={e => setTo (e.target.value)}
           >
             <option selected>General Sec</option>
             <option>Hostel Sec</option>
