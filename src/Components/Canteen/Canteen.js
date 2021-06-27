@@ -24,12 +24,12 @@ const Canteen = () => {
       price: 30,
     },
     {
-      id: 3,
+      id: 4,
       name: 'mix veg balle',
-      price: 30,  
+      price: 30,
     },
     {
-      id: 3,
+      id: 5,
       name: 'mix veg balle',
       price: 30,
     },
@@ -40,17 +40,17 @@ const Canteen = () => {
     Cart: [],
   });
 
-  const [menuSearch, setMenuSearch] = useState("");
+  const [menuSearch, setMenuSearch] = useState ('');
 
-  function handleChange(){
-    var change = document.getElementById("menuInput").value;
-    setMenuSearch(change);
+  function handleChange () {
+    var change = document.getElementById ('menuInput').value;
+    setMenuSearch (change);
   }
 
   return (
     <div className="container">
-    <h1>Canteen</h1>
-    <hr />
+      <h1>Canteen</h1>
+      <hr />
       <h3 className="m-2">
         {' '}
         {totalPrice === 0 ? '' : `Total Price ${totalPrice}`}
@@ -68,13 +68,28 @@ const Canteen = () => {
       <div className="container">
         <div className="d-flex justify-content-between">
           <h3>Menu</h3>
-          <input id = "menuInput" type="text" placeholder="Search" className="p-1" onChange={()=>{handleChange()}} value={menuSearch}></input>
+          <input
+            id="menuInput"
+            type="text"
+            placeholder="Search"
+            className="p-1"
+            onChange={() => {
+              handleChange ();
+            }}
+            value={menuSearch}
+          />
         </div>
         <hr />
         <div className="bd-highlight overflow-y-scroll menu">
-        {CanteenItemList.filter(item => item.name.toLowerCase().includes(menuSearch.toLowerCase())).map (item => (
-           <CanteenMenu key={item.id} {...item} AddItemToCart={AddItemToCart} />
-        ))}
+          {CanteenItemList.filter (item =>
+            item.name.toLowerCase ().includes (menuSearch.toLowerCase ())
+          ).map (item => (
+            <CanteenMenu
+              key={item.id}
+              {...item}
+              AddItemToCart={AddItemToCart}
+            />
+          ))}
         </div>
       </div>
 
