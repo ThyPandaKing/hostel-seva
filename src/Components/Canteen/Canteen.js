@@ -96,7 +96,7 @@ const Canteen = () => {
       </div>
 
       <br />
-      <Complaints from_User="Aditya" />
+      <Complaints from_User={JSON.parse(sessionStorage.getItem('user')).name} />
     </div>
   );
 };

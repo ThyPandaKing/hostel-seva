@@ -25,13 +25,13 @@ const Mess = () => {
     ItemList: MessItemList,
     Cart: [],
   });
-  const [menuSearch, setMenuSearch] = useState("");
+  const [menuSearch, setMenuSearch] = useState ('');
 
-  function handleChange(){
-    var change = document.getElementById("menuInput").value;
-    setMenuSearch(change);
+  function handleChange () {
+    var change = document.getElementById ('menuInput').value;
+    setMenuSearch (change);
   }
-  
+
   //  When we fetch data from mess backend, we will use this setFoodWaste variable too
 
   return (
@@ -75,10 +75,21 @@ const Mess = () => {
       <div className="container">
         <div className="d-flex justify-content-between">
           <h3>Extras</h3>
-          <input id = "menuInput" type="text" placeholder="Search" className="p-1" onChange={()=>{handleChange()}} value={menuSearch}></input>
+          <input
+            id="menuInput"
+            type="text"
+            placeholder="Search"
+            className="p-1"
+            onChange={() => {
+              handleChange ();
+            }}
+            value={menuSearch}
+          />
         </div>
-        <hr />    
-        {MessItemList.filter(item => item.name.toLowerCase().includes(menuSearch.toLowerCase())).map (item => (
+        <hr />
+        {MessItemList.filter (item =>
+          item.name.toLowerCase ().includes (menuSearch.toLowerCase ())
+        ).map (item => (
           <ExtraCard key={item.id} {...item} AddItemToCart={AddItemToCart} />
         ))}
       </div>
@@ -91,7 +102,9 @@ const Mess = () => {
 
         */}
 
-      <Complaints from_User="Aditya" />
+      <Complaints
+        from_User={JSON.parse (sessionStorage.getItem ('user')).name}
+      />
     </div>
   );
 };

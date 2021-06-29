@@ -11,7 +11,6 @@ const NavBar = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="Navbar">
             <Link to="/mess">Mess</Link>
-            <Link to="/sports">Sports</Link>
             <Link to="/canteen">Canteen</Link>
             <Link to="/complaints">Complaints List</Link>
             <button className="btn btn-danger logout">Logout</button>          

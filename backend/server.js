@@ -1,100 +1,114 @@
-const express = require("express");
-const app = express();
-// const cors = require("cors")
-const mongoose = require("mongoose")
-let User = require("./models/user")
-let Complaint = require("./models/complaints")
+const express = require ('express');
+const app = express ();
+const cors = require ('cors');
+const mongoose = require ('mongoose');
+const body_parser = require ('body-parser');
+const bcrypt = require ('bcrypt');
+const config = require ('config');
 
+app.use (body_parser.json ());
+app.use (cors ());
 
-app.use(express.json())
+const MONGO_DB_URI = config.get ('MONGO_DB_URI');
 
-mongoose.connect("mongodb://localhost:27017/hostelDB", {useNewUrlParser: true, useCreateIndex: true})
-
-// const baseComplaint0 = new Complaint({
-//     id: 1,
-//     title: "Chillbro",
-//     content: "just chilling",
-//     from: "Manjunath",
-//     to: "Aditya",
-//     likes: 0,
-//     dislikes: 0
-// })
-
-// const baseComplaint1 = new Complaint({
-//     id: 2,
-//     title: "Chillbro",
-//     content: "just chilling",
-//     from: "Manjunath",
-//     to: "Aditya",
-//     likes: 1,
-//     dislikes: 0
-// })
-
-// const baseComplaint2 = new Complaint({
-//     id: 3,
-//     title: "Chillbro",
-//     content: "just chilling",
-//     from: "Manjunath",
-//     to: "Aditya",
-//     likes: 0,
-//     dislikes: 1
-// })
-
-// const baseComplaint3 = new Complaint({
-//     id: 4,
-//     title: "Chillbro",
-//     from: "Manjunath",
-//     to: "Aditya",
-//     content: "just chilling",
-//     likes: 1,
-//     dislikes: 1
-// })
-
-// const defaultComplaints = [baseComplaint0, baseComplaint1, baseComplaint2, baseComplaint3]
-
-// Complaint.find({}, (err, foundComplaints) => {
-//     if(foundComplaints.length == 0){
-//         Complaint.insertMany(defaultComplaints , (err) => {
-//             console.log("insert error "+err);
-//         })
-//     }
-// })
+const User = require ('./models/user');
 
 // app.use(cors)
 // routers to handle different routes
-const homeRouter = require('./routers/home')
-const messRouter = require('./routers/mess')
-const canteenRouter = require("./routers/canteen")
-const complaintsRouter = require("./routers/complaints")
+const homeRouter = require ('./routers/home');
+const messRouter = require ('./routers/mess');
+const canteenRouter = require ('./routers/canteen');
+const complaintsRouter = require ('./routers/complaints');
 
-app.use("/home",homeRouter)
-app.use("/canteen",canteenRouter)
-app.use("/mess",messRouter)
-app.use("/complaints",complaintsRouter)
+app.use ('/home', homeRouter);
+app.use ('/canteen', canteenRouter);
+app.use ('/mess', messRouter);
+app.use ('/complaints', complaintsRouter);
 
-app.post("/login", (req,res) => {
-    const {name, emailid, password} = req.body;
-    // console.log(req.body);
-    // console.log(req);
-    User.find({name})
-    .then(user => {
-        console.log(user);
-        if(user == null){
-            var newuser = new User({
-                name,
-                emailid,
-                password
-            })
-            newuser.save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err))
+const PORT = 3001;
+
+app.post ('/register', async (req, res) => {
+  try {
+    const {email, name, password} = req.body;
+
+    if (!name || !email || !password) {
+      return res.status (400).send ('Fill All the details');
+    }
+
+    await User.findOne ({email})
+      .then (user => {
+        if (user) {
+          return res.status (400).send ('User Already Exists');
         }
-        else{
-            res.json(user[0]);
-        }
-    })
-    .catch(err => console.log(err))
-})
+      })
+      .catch (err => console.log (err));
 
+    const cryptPassword = await bcrypt.hash (password, 10);
 
-app.listen(4000,() => console.log("server running on port 4000"))
+    const newUser = new User ({
+      emailId: email,
+      name: name,
+      password: cryptPassword,
+    });
+
+    newUser
+      .save ()
+      .then (res => console.log (res))
+      .catch (err => console.log (err));
+  } catch (err) {
+    console.log ('something is wrong');
+  }
+  res.send ('done');
+});
+
+app.post ('/login', async (req, res) => {
+  try {
+    const {email, password} = req.body;
+    console.log ('search start');
+    const user = await User.find ({
+      emailId: email,
+    });
+    if (user.length) {
+      if (await bcrypt.compare (password, user[0].password)) {
+        res.send ({
+          msg: 'User Found',
+          found: true,
+          user: user[0],
+        });
+      } else {
+        res.send ({
+          msg: 'Wrong Password',
+          found: false,
+          user: null,
+        });
+      }
+    } else {
+      res.send ({
+        msg: 'Invalid Email ID',
+        found: false,
+        user: null,
+      });
+    }
+  } catch (error) {
+    console.log (error);
+    res.status (404).send ({
+      msg: 'some error',
+      found: false,
+      user: null,
+    });
+  }
+});
+
+mongoose.connect (
+  MONGO_DB_URI,
+  {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+  },
+  () => {
+    console.log ('connected to mongo_db');
+    app.listen (PORT, () => console.log (`server running on port ${PORT}`));
+  }
+);

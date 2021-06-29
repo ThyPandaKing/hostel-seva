@@ -1,6 +1,5 @@
 import {Button} from 'react-bootstrap';
 import {useState} from 'react';
-import ComplaintData from './ComplaintData';
 
 const axios = require('axios');
 
@@ -21,9 +20,9 @@ const Complaints = ({from_User}) => {
     if (!(title && content && from && to)) {
       return;
     }
-
-    axios.post("/complaints/addComplaint", {
-        complaint:{
+    console.log('hello');
+    axios.post("http://localhost:3001/complaints/addComplaint", {
+        complaint: {
           title,
           content,
           to,
@@ -35,15 +34,6 @@ const Complaints = ({from_User}) => {
     )
     .then(res => console.log(res))
     .catch(err => console.log(err));
-    // ComplaintData.push ({
-    //   title,
-    //   content,
-    //   from,
-    //   to,
-    //   Likes: [],
-    //   DisLikes: [],
-    //   id: new Date ().getTime ().toString (),
-    // });
 
     initialState ();
   };

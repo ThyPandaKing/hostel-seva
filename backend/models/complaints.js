@@ -1,4 +1,5 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+
 
 const Schema = mongoose.Schema
 
@@ -7,6 +8,7 @@ const complaintSchema = new Schema({
     content:    {type: String, required: true},
     from :      {type: String, required: true},
     to:         {type: String, required: true},
+    date:       {type: Date,   default:  Date.now},
     likes:      {type: [String]},
     dislikes:   {type: [String]},
 })
