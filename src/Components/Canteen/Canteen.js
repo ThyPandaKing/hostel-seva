@@ -5,7 +5,7 @@ import ShowItems from '../CartStuff/ShowItems';
 import {Button} from 'react-bootstrap';
 import useCart from '../CartStuff/useCart';
 import './canteen.css';
-
+import { BillModal } from '../BillModal/BillModal'
 
 
 const Canteen = () => {
@@ -65,7 +65,9 @@ const Canteen = () => {
             AddItemToCart={AddItemToCart}
             RemoveItemFromCart={RemoveItemFromCart}
           />
-          <Button variant="primary" className="m-4">Order Send</Button>
+          <div className="m-4">
+            <BillModal Cart={cart} TotalPrice={totalPrice}/>
+          </div>
         </div>}
       <div className="container">
         <div className="d-flex justify-content-between">
