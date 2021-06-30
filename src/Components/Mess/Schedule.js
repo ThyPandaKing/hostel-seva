@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import {MessData, MessTimings} from './ScheduleData';
 import {Table, Card} from 'react-bootstrap';
+import {EditScheduleData} from './EditScheduleData';
+
 
 const Schedule = () => {
   const [isScheduleShowing, setIsScheduleShowing] = useState (false);
@@ -51,6 +53,14 @@ const Schedule = () => {
       <button className="btn btn-primary m-2" onClick={handleScheduleClick}>
         {!isScheduleShowing ? 'Show-Schedule' : 'Hide'}
       </button>
+      <EditScheduleData scheduleData={scheduleData} setScheduleData={setScheduleData} close={setIsScheduleShowing}/>
+      {isScheduleShowing? 
+        <button className="btn btn-danger m-2 float-right" data-bs-toggle="modal" data-bs-target="#EditScheduleModal">
+          {"Edit"}
+        </button> 
+        : null
+      }
+      
 
       {isScheduleShowing
         ? <div>
@@ -69,32 +79,23 @@ const Schedule = () => {
                   return (
                     <tr key={item.Day} style={{fontSize: '0.7rem'}}>
                       <td>{item.Day}</td>
-                      <td>
-                        {item.BreakFast.map (it => it + ' ')}
+                      <td >
+                        {item.BreakFast}
                       </td>
-
-                      <td>
-                        {item.Lunch.map (it => it + ' ')}
+                      <td >
+                        {item.Lunch}
                       </td>
-
-                      <td>
-                        {item.Snacks.map (it => it + ' ')}
+                      <td >
+                        {item.Snacks}
                       </td>
-
-                      <td>
-                        {item.Dinner.map (it => it + ' ')}
+                      <td >
+                          {item.Dinner}
                       </td>
                     </tr>
                   );
                 })}
               </thead>
             </Table>
-            <button
-              className="btn btn-primary m-2"
-              onClick={handleScheduleClick}
-            >
-              {!isScheduleShowing ? 'Show-Schedule' : 'Hide'}
-            </button>
           </div>
         : <div />}
     </div>

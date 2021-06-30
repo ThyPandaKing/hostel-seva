@@ -6,7 +6,7 @@ import {Button} from 'react-bootstrap';
 import ExtraCard from './ExtraCard';
 import useCart from '../CartStuff/useCart';
 import ShowItems from '../CartStuff/ShowItems';
-
+import { BillModal } from '../BillModal/BillModal';
 const Mess = () => {
   const [foodWaste, setFoodWaste] = useState ('30');
   const [MessItemList, setMessItemList] = useState ([
@@ -69,7 +69,9 @@ const Mess = () => {
             AddItemToCart={AddItemToCart}
             RemoveItemFromCart={RemoveItemFromCart}
           />
-          <Button variant="primary" className="m-4">Order Send</Button>
+          <div className="m-4">
+            <BillModal Cart={cart} TotalPrice={totalPrice}/>
+          </div>
         </div>}
 
       <div className="container">

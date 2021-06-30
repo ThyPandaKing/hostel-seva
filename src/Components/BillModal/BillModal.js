@@ -4,15 +4,15 @@ import OrderItem from "./OrderItem"
 export const BillModal = ({Cart, TotalPrice}) => {
     return (
         <>
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#BillModal">
                 Place Order
             </button>
             
-            <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="BillModal" tabindex="-1" aria-labelledby="BillModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Order Details</h5>
+                            <h5 className="modal-title" id="BillModalLabel">Order Details</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body mx-5">
