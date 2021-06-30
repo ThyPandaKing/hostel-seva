@@ -30,18 +30,12 @@ const PORT = 3001;
 app.post ('/register', async (req, res) => {
   try {
     const {email, name, password} = req.body;
-
+    
     if (!name || !email || !password) {
-      return res.status (400).send ('Fill All the details');
+      return res.send ('Fill All the details');
     }
 
-    await User.findOne ({email})
-      .then (user => {
-        if (user) {
-          return res.status (400).send ('User Already Exists');
-        }
-      })
-      .catch (err => console.log (err));
+    
 
     const cryptPassword = await bcrypt.hash (password, 10);
 
@@ -54,9 +48,9 @@ app.post ('/register', async (req, res) => {
     newUser
       .save ()
       .then (res => console.log (res))
-      .catch (err => console.log (err));
+      .catch (err => console.log(err), res.send ('User Already Exists'));
   } catch (err) {
-    console.log ('something is wrong');
+    console.log(err)
   }
   res.send ('done');
 });

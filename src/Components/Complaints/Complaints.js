@@ -1,45 +1,70 @@
 import {Button} from 'react-bootstrap';
 import {useState} from 'react';
+import ShowModal from '../Modal/modal';
 
-const axios = require('axios');
+const axios = require ('axios');
 
 const Complaints = ({from_User}) => {
   const [title, setTitle] = useState ('');
   const [content, setContent] = useState ('');
   const [from, setFrom] = useState (from_User);
   const [to, setTo] = useState ('General Sec');
+  const [popup, setPopup] = useState ({
+    title: '',
+    msg: '',
+    visible: false,
+  });
 
   const initialState = () => {
     setFrom (from_User);
     setTo ('');
     setTitle ('');
     setContent ('');
+    setPopup ({
+      title: '',
+      msg: '',
+      visible: false,
+    });
   };
 
   const AddPost = () => {
     if (!(title && content && from && to)) {
+      setPopup ({
+        title: 'Empty Fields',
+        msg: 'your complaint has some empty felids, please fill them',
+        visible: true,
+      });
+
       return;
     }
-    console.log('hello');
-    axios.post("http://localhost:3001/complaints/addComplaint", {
+    console.log ('hello');
+    axios
+      .post ('http://localhost:3001/complaints/addComplaint', {
         complaint: {
           title,
           content,
           to,
           from,
-          likes:[],
-          dislikes:[],   
-        }
-      }
-    )
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+          likes: [],
+          dislikes: [],
+        },
+      })
+      .then (res => {
+        setPopup ({
+          title: 'Added',
+          msg: 'your complaint is added, check complaint list',
+          visible: true,
+        });
+        console.log (res.data);
+      })
+      .catch (err => console.log (err));
 
     initialState ();
   };
 
   return (
     <div className="container p-2">
+      <ShowModal popup={popup} setPopup={setPopup} />
       <div className="d-flex mx-2">
         <div className="complaint p-2 bd-highlight border border-bottom-0 rounded-top">
           Complaint

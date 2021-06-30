@@ -2,9 +2,11 @@ import {useState, useEffect} from 'react';
 import './SignIn.css';
 import {Redirect} from 'react-router-dom';
 import axios from 'axios';
+import ShowModal from '../Modal/modal';
 
 const Login = () => {
   const [popup, setPopup] = useState ({
+    title: '',
     msg: '',
     visible: false,
   });
@@ -19,10 +21,11 @@ const Login = () => {
       if (res.data.found === true) {
         // TODO: to improve this
         console.log (res.data.user);
-        sessionStorage.setItem('user',JSON.stringify(res.data.user));
+        sessionStorage.setItem ('user', JSON.stringify (res.data.user));
         setAuth (true);
       } else {
         setPopup ({
+          title: 'Something Wrong',
           msg: res.data.msg,
           visible: true,
         });
@@ -30,24 +33,12 @@ const Login = () => {
     });
   };
 
-  // TODO:removing the warning
-  useEffect (
-    () => {
-      setTimeout (() => {
-        setPopup ({
-          visible: false,
-        });
-      }, 2000);
-    },
-    [popup.msg]
-  );
-
   if (auth || sessionStorage.getItem ('user')) return <Redirect to="/" />;
   return (
     <div>
-
+      <h1 className="m-2 p-2 text-dark">Login</h1>
       <div className="container-sm cnt">
-        {popup.visible && popup.msg}
+        <ShowModal popup={popup} setPopup={setPopup} />
         <div className="form-group">
           <label htmlFor="user_email">Email address</label>
           <input

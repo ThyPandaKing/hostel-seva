@@ -96,12 +96,6 @@ const Mess = () => {
 
       <hr />
 
-      {/* Complaint
-        
-        from which user to which user... now in mess it will from user to admin
-
-        */}
-
       <Complaints
         from_User={JSON.parse (sessionStorage.getItem ('user')).name}
       />

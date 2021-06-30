@@ -22,7 +22,6 @@ const ComplaintCard = props => {
         })
         .then (res => {
           setUserStatus (res.data);
-          console.log (res.data);
         })
         .catch (err => console.log (err));
     },

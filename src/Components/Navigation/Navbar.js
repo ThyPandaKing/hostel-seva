@@ -1,6 +1,7 @@
 import './Navbar.css';
 import {Link} from 'react-router-dom';
 import {Navbar, Nav} from 'react-bootstrap';
+import Logout from '../SignUp/LogOut';
 
 const NavBar = () => {
   return (
@@ -13,8 +14,9 @@ const NavBar = () => {
             <Link to="/mess">Mess</Link>
             <Link to="/canteen">Canteen</Link>
             <Link to="/complaints">Complaints List</Link>
-            <button className="btn btn-danger logout">Logout</button>          
+                    
           </Nav>
+          <Logout />
         </Navbar.Collapse>
       </Navbar>
     </div>

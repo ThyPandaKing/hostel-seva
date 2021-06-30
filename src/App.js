@@ -1,10 +1,10 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import NavBar from './Components/Navbar';
+import NavBar from './Components/Navigation/Navbar';
 import Home from './Components/Home/Home';
 import Mess from './Components/Mess/Mess';
 import Canteen from './Components/Canteen/Canteen';
-import Footer from './Components/Footer';
+import Footer from './Components/Footer/Footer';
 import ComplaintList from './Components/Complaints/ComplaintList';
 import GoToHome from './Components/GoToHome';
 import SignIn from './Components/SignUp/SignIn';
@@ -13,7 +13,9 @@ import PrivateRoute from './Components/PrivateRoute';
 function App () {
   return (
     <Router>
-      <NavBar />
+      <PrivateRoute>
+        <NavBar />
+      </PrivateRoute>
       <Switch>
         <PrivateRoute exact path="/">
           <Home />
@@ -34,7 +36,9 @@ function App () {
           <GoToHome />
         </Route>
       </Switch>
-      <Footer />
+      <PrivateRoute>
+        <Footer />
+      </PrivateRoute>
     </Router>
   );
 }

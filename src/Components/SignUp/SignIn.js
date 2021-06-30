@@ -7,7 +7,12 @@ const SignIn = () => {
   const [isRegisterPage, setIsRegisterPage] = useState (false);
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center'}}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
       {isRegisterPage === false
         ? <div className="m-5 pa-3">
             <Login />
@@ -19,7 +24,7 @@ const SignIn = () => {
               Go to Register page
             </button>
           </div>
-        : <div className = 'm-5 pa-3'>
+        : <div className="m-5 pa-3">
             <Register setIsRegisterPage={setIsRegisterPage} />
 
             <button
