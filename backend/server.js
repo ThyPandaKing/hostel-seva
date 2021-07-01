@@ -13,6 +13,7 @@ const MONGO_DB_URI = config.get ('MONGO_DB_URI');
 
 const User = require ('./models/user');
 
+
 // app.use(cors)
 // routers to handle different routes
 const homeRouter = require ('./routers/home');

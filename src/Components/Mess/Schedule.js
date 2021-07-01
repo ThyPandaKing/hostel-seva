@@ -96,6 +96,7 @@ const Schedule = () => {
         {!isScheduleShowing ? 'Show-Schedule' : 'Hide'}
       </button>
       <EditScheduleData
+        scheduleData = {scheduleData}
         handleItemEdit={handleItemEdit}
         modalVisibility={modalVisibility}
         setModalVisibility={setModalVisibility}

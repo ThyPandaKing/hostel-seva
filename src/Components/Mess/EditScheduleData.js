@@ -2,10 +2,21 @@ import React, {useEffect} from 'react';
 import {useState} from 'react';
 import {Dropdown, Modal, Button} from 'react-bootstrap';
 
+let dayId = {
+  "Monday": 0,
+  "Tuesday": 1,
+  "Wednesday": 2,
+  "Thursday": 3,
+  "Friday": 4,
+  "Satday": 5,
+  "Sunday": 6,
+}
+
 export const EditScheduleData = ({
+  scheduleData,
   handleItemEdit,
   modalVisibility,
-  setModalVisibility,
+  setModalVisibility
 }) => {
   const [day, setDay] = useState ('');
   const [meal, setMeal] = useState ('');
@@ -14,6 +25,21 @@ export const EditScheduleData = ({
     visible: false,
     msg: '',
   });
+  const handleSetMeal = (mealType) => {
+    setMeal(mealType);
+    if(day!=''){
+      setFood(scheduleData[dayId[day]][mealType])
+    }
+  }
+
+  const handleSetDay = (dayType) => {
+    setDay(dayType);
+    if(meal!=""){
+      setFood(scheduleData[dayId[dayType]][meal])
+    }
+  }
+
+
 
   useEffect (
     () => {
@@ -55,25 +81,25 @@ export const EditScheduleData = ({
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => setDay ('Monday')}>
+              <Dropdown.Item onClick={() => handleSetDay ('Monday')}>
                 Monday
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setDay ('Tuesday')}>
+              <Dropdown.Item onClick={() => handleSetDay ('Tuesday')}>
                 Tuesday
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setDay ('Wednesday')}>
+              <Dropdown.Item onClick={() => handleSetDay ('Wednesday')}>
                 Wednesday
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setDay ('Thursday')}>
+              <Dropdown.Item onClick={() => handleSetDay ('Thursday')}>
                 Thursday
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setDay ('Friday')}>
+              <Dropdown.Item onClick={() => handleSetDay ('Friday')}>
                 Friday
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setDay ('Saturday')}>
+              <Dropdown.Item onClick={() => handleSetDay ('Saturday')}>
                 Saturday
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setDay ('Sunday')}>
+              <Dropdown.Item onClick={() => handleSetDay ('Sunday')}>
                 Sunday
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -86,16 +112,16 @@ export const EditScheduleData = ({
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => setMeal ('BreakFast')}>
+              <Dropdown.Item onClick={() => handleSetMeal ('BreakFast')}>
                 Break Fast
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setMeal ('Lunch')}>
+              <Dropdown.Item onClick={() => handleSetMeal ('Lunch')}>
                 Lunch
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setMeal ('Snack')}>
+              <Dropdown.Item onClick={() => handleSetMeal ('Snack')}>
                 Snack
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => setMeal ('Dinner')}>
+              <Dropdown.Item onClick={() => handleSetMeal ('Dinner')}>
                 Dinner
               </Dropdown.Item>
 
@@ -107,6 +133,7 @@ export const EditScheduleData = ({
           <textarea
             className="form-control"
             aria-label="With textarea"
+            style={{resize: "none", height: "120px"}}
             value={food}
             onChange={e => setFood (e.target.value)}
           />

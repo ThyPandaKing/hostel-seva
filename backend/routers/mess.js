@@ -1,6 +1,7 @@
 const express = require ('express');
 const router = express.Router ();
 const MessMenu = require ('../models/messMenu');
+const MessItem = require('../models/messItem') // EXTRAS
 
 router.use (express.json ());
 
@@ -47,5 +48,31 @@ router.put ('/:id', (req, res) => {
     }
   );
 });
+
+router.get("/extras", (req, res)=>{
+  MessItem.find({})
+  .then(MessItemList => res.json(MessItemList))
+  .catch(err => console.log(err));
+})
+
+
+router.post("/extras/remove", (req, res) => {
+  const {dishName} = req.body;
+  MessItem.deleteOne({name: dishName})
+          .then(item => console.log(item))
+          .catch(err => console.log(err));
+})
+
+router.post("/extras/add", (req,res) => {
+  const {dishName, cost} = req.body
+  const newMessItem = new MessItem({
+    name: dishName,
+    price: cost,
+    quantity: 10
+  })
+  newMessItem.save()
+  .then(item => res.json(item))
+  .catch(err => console.log(err))
+})
 
 module.exports = router;
