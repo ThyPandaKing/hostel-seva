@@ -2,42 +2,31 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import {useState, useEffect} from 'react';
 
-const EditItemModal = ({
-  modalVisibility,
-  setModalVisibility,
-  add,
-  initialData,
-}) => {
-  const [dish, setDish] = useState (initialData.dish);
-  const [cost, setCost] = useState (initialData.cost);
+const WasteModal = ({modalVisibility, setModalVisibility, add}) => {
+  const [waste, setWaste] = useState ('');
   const [warning, setWarning] = useState ({
     visible: false,
     msg: '',
   });
 
   const handleAdd = () => {
-    if (dish === '') {
-      setWarning ({
-        msg: '* fill dish name',
-        visible: true,
-      });
-      return;
-    }
-    if (cost <= 0) {
-      setWarning ({
-        msg: '* Positive cost only',
-        visible: true,
-      });
-      return;
-    }
+    try {
+      if (waste === '') {
+        setWarning ({
+          msg: '* fill waste %',
+          visible: true,
+        });
+        return;
+      }
 
-    setModalVisibility (false);
-    if (initialData.id) {
-      add (dish, cost, initialData.id);
-    } else {
-      setDish ('');
-      setCost ('');
-      add (dish, cost);
+      setModalVisibility (false);
+      setWaste ('');
+      add (Number (waste));
+    } catch (e) {
+      setWarning ({
+        msg: '* fill only as number',
+        visible: true,
+      });
     }
   };
 
@@ -62,13 +51,10 @@ const EditItemModal = ({
       <Modal.Header
         closeButton
         onClick={() => {
-          if (!initialData.id) {
-            setDish ('');
-            setCost ('');
-          }
+          setWaste ('');
         }}
       >
-        <Modal.Title>{!initialData.id ? 'Add' : 'Edit'}</Modal.Title>
+        <Modal.Title>Add Waste</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -77,17 +63,12 @@ const EditItemModal = ({
         <div className="input-group my-2">
           <input
             className="form-control mx-1"
-            placeholder="Name of the dish"
-            onChange={e => setDish (e.target.value)}
-            value={dish}
-          />
-          <input
-            className="form-control mx-1"
-            placeholder="Cost"
+            placeholder="Waste %age"
             type="Number"
-            onChange={e => setCost (e.target.value)}
-            value={cost}
+            onChange={e => setWaste (e.target.value)}
+            value={waste}
           />
+
         </div>
         <button
           className="btn btn-primary float-right mx-2"
@@ -101,4 +82,4 @@ const EditItemModal = ({
   );
 };
 
-export default EditItemModal;
+export default WasteModal;

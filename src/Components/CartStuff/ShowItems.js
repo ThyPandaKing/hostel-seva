@@ -9,7 +9,7 @@ const ShowItems = ({cart, AddItemToCart, RemoveItemFromCart}) => {
         <ListGroup variant="flush">
           {cart.map (item => (
             <ListGroup.Item
-              key={item.id}
+              key={item._id}
               style={{display: 'flex', justifyContent: 'space-between'}}
             >
               <p>{item.times} {item.name} for {item.times * item.price}</p>
@@ -17,7 +17,7 @@ const ShowItems = ({cart, AddItemToCart, RemoveItemFromCart}) => {
                 <Button
                   variant="success"
                   style={{padding: '0.3rem', margin: '0.1rem'}}
-                  onClick={() => AddItemToCart (item.id)}
+                  onClick={() => AddItemToCart (item._id)}
                 >
                   <AiFillPlusCircle />
                 </Button>
@@ -25,7 +25,7 @@ const ShowItems = ({cart, AddItemToCart, RemoveItemFromCart}) => {
                 <Button
                   variant="danger"
                   style={{padding: '0.3rem', margin: '0.1rem'}}
-                  onClick={() => RemoveItemFromCart (item.id)}
+                  onClick={() => RemoveItemFromCart (item._id)}
                 >
                   <AiFillMinusCircle />
                 </Button>

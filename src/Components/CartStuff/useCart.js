@@ -1,7 +1,6 @@
 import {useState} from 'react';
 
 const useCart = ({ItemList, Cart}) => {
-  const [itemList, setItemList] = useState (ItemList);
   const [cart, setCart] = useState (Cart);
   const [totalPrice, setTotalPrice] = useState (0);
 
@@ -11,7 +10,7 @@ const useCart = ({ItemList, Cart}) => {
     let inIt = false;
     let newTotal = totalPrice;
     const newCart = cart.map (item => {
-      if (item.id === id) {
+      if (item._id === id) {
         inIt = true;
         item.times += 1;
         newTotal += item.price;
@@ -22,7 +21,7 @@ const useCart = ({ItemList, Cart}) => {
       setCart (newCart);
       setTotalPrice (newTotal);
     } else {
-      const newItem = itemList.find (item => item.id === id);
+      const newItem = ItemList.find (item => item._id === id);
 
       newItem.times = 1;
       newTotal += newItem.price;
@@ -35,7 +34,7 @@ const useCart = ({ItemList, Cart}) => {
   const RemoveItemFromCart = id => {
     let newTotal = totalPrice;
     const newCart = cart.filter (item => {
-      if (item.id === id) {
+      if (item._id === id) {
         item.times -= 1;
         newTotal -= item.price;
       }
