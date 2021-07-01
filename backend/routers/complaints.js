@@ -1,6 +1,6 @@
-var express = require ('express');
-var router = express.Router ();
-let Complaint = require ('../models/complaints');
+const express = require ('express');
+const router = express.Router ();
+const Complaint = require ('../models/complaints');
 
 router.use (express.json ());
 

@@ -4,5 +4,9 @@
     "list",
     "mess",
     "set"
+  ],
+  "cSpell.words": [
+    "labelledby",
+    "tabindex"
   ]
 }

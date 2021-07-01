@@ -6,7 +6,7 @@ import {Button} from 'react-bootstrap';
 import ExtraCard from './ExtraCard';
 import useCart from '../CartStuff/useCart';
 import ShowItems from '../CartStuff/ShowItems';
-import { BillModal } from '../BillModal/BillModal';
+import {BillModal} from '../BillModal/BillModal';
 const Mess = () => {
   const [foodWaste, setFoodWaste] = useState ('30');
   const [MessItemList, setMessItemList] = useState ([
@@ -26,11 +26,6 @@ const Mess = () => {
     Cart: [],
   });
   const [menuSearch, setMenuSearch] = useState ('');
-
-  function handleChange () {
-    var change = document.getElementById ('menuInput').value;
-    setMenuSearch (change);
-  }
 
   //  When we fetch data from mess backend, we will use this setFoodWaste variable too
 
@@ -54,14 +49,19 @@ const Mess = () => {
           {foodWaste}% of Food Wasted Today
         </h4>
       </div>
+      
+      
       <br />
       <Schedule />
       <br />
+      
       <h3 className="m-2">
         {' '}
         {totalPrice === 0 ? '' : `Total Price ${totalPrice}`}
         {' '}
       </h3>
+
+
       {cart.length !== 0 &&
         <div>
           <ShowItems
@@ -70,7 +70,7 @@ const Mess = () => {
             RemoveItemFromCart={RemoveItemFromCart}
           />
           <div className="m-4">
-            <BillModal Cart={cart} TotalPrice={totalPrice}/>
+            <BillModal Cart={cart} TotalPrice={totalPrice} />
           </div>
         </div>}
 
@@ -82,8 +82,8 @@ const Mess = () => {
             type="text"
             placeholder="Search"
             className="p-1"
-            onChange={() => {
-              handleChange ();
+            onChange={(e) => {
+              setMenuSearch (e.target.value);
             }}
             value={menuSearch}
           />

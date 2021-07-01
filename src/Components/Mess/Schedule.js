@@ -1,21 +1,63 @@
-import {useState} from 'react';
-import {MessData, MessTimings} from './ScheduleData';
+import {useEffect, useState} from 'react';
+import {MessTimings} from './ScheduleData';
 import {Table, Card} from 'react-bootstrap';
 import {EditScheduleData} from './EditScheduleData';
 
+import axios from 'axios';
 
 const Schedule = () => {
   const [isScheduleShowing, setIsScheduleShowing] = useState (false);
-  const [scheduleData, setScheduleData] = useState (MessData);
+  const [scheduleData, setScheduleData] = useState ([]);
+  const [modalVisibility, setModalVisibility] = useState (false);
 
-  /*
-    1. Design can be added later, though not needed,
-    2. Dynamic Data change by admin, (backend stuff)
-
-  */
+  useEffect (() => {
+    axios
+      .get ('http://localhost:3001/mess')
+      .then (res => setScheduleData (res.data))
+      .catch (err => console.log (err));
+  }, []);
 
   const handleScheduleClick = () => {
     setIsScheduleShowing (!isScheduleShowing);
+  };
+
+  const handleItemEdit = async (day, meal, food) => {
+    let priority;
+
+    switch (day) {
+      case 'Monday':
+        priority = 1;
+        break;
+      case 'Tuesday':
+        priority = 2;
+        break;
+      case 'Wednesday':
+        priority = 3;
+        break;
+      case 'Thursday':
+        priority = 4;
+        break;
+      case 'Friday':
+        priority = 5;
+        break;
+      case 'Saturday':
+        priority = 6;
+        break;
+      default:
+        priority = 7;
+    }
+
+    const id = scheduleData[priority - 1]._id;
+
+    await axios
+      .put (`http://localhost:3001/mess/${id}`, {meal, food})
+      .then (res => console.log (res.data))
+      .catch (err => console.log (err));
+
+    await axios
+      .get ('http://localhost:3001/mess')
+      .then (res => setScheduleData (res.data))
+      .catch (err => console.log (err));
   };
 
   return (
@@ -53,43 +95,83 @@ const Schedule = () => {
       <button className="btn btn-primary m-2" onClick={handleScheduleClick}>
         {!isScheduleShowing ? 'Show-Schedule' : 'Hide'}
       </button>
-      <EditScheduleData scheduleData={scheduleData} setScheduleData={setScheduleData} close={setIsScheduleShowing}/>
-      {isScheduleShowing? 
-        <button className="btn btn-danger m-2 float-right" data-bs-toggle="modal" data-bs-target="#EditScheduleModal">
-          {"Edit"}
-        </button> 
-        : null
-      }
-      
+      <EditScheduleData
+        handleItemEdit={handleItemEdit}
+        modalVisibility={modalVisibility}
+        setModalVisibility={setModalVisibility}
+      />
+      {isScheduleShowing
+        ? <button
+            className="btn btn-primary m-2 float-right"
+            onClick={() => setModalVisibility (true)}
+          >
+            {'Edit'}
+          </button>
+        : null}
 
       {isScheduleShowing
         ? <div>
             {' '}<Table striped bordered hover variant="dark" responsive>
               <thead>
                 <tr>
-                  <th>Day</th>
-                  <th>Break Fast</th>
-                  <th>Lunch</th>
-                  <th>Snacks</th>
-                  <th>Dinner</th>
+                  <th
+                    style={{
+                      wordWrap: 'break-word',
+                      width: '150px',
+                    }}
+                  >
+                    Day
+                  </th>
+                  <th
+                    style={{
+                      wordWrap: 'break-word',
+                      width: '10px',
+                    }}
+                  >
+                    Break Fast
+                  </th>
+                  <th
+                    style={{
+                      wordWrap: 'break-word',
+                      width: '10px',
+                    }}
+                  >
+                    Lunch
+                  </th>
+                  <th
+                    style={{
+                      wordWrap: 'break-word',
+                      width: '10px',
+                    }}
+                  >
+                    Snacks
+                  </th>
+                  <th
+                    style={{
+                      wordWrap: 'break-word',
+                      width: '10px',
+                    }}
+                  >
+                    Dinner
+                  </th>
                 </tr>
               </thead>
               <thead>
                 {scheduleData.map (item => {
                   return (
-                    <tr key={item.Day} style={{fontSize: '0.7rem'}}>
-                      <td>{item.Day}</td>
-                      <td >
+                    <tr key={item._id} style={{fontSize: '0.7rem'}}>
+                      <td>{item.day}</td>
+                      <td>
                         {item.BreakFast}
                       </td>
-                      <td >
+                      <td>
                         {item.Lunch}
                       </td>
-                      <td >
-                        {item.Snacks}
+                      <td>
+                        {item.Snack}
                       </td>
-                      <td >
-                          {item.Dinner}
+                      <td>
+                        {item.Dinner}
                       </td>
                     </tr>
                   );
@@ -98,6 +180,13 @@ const Schedule = () => {
             </Table>
           </div>
         : <div />}
+
+      {!isScheduleShowing
+        ? ''
+        : <button className="btn btn-primary m-2" onClick={handleScheduleClick}>
+            {' '}{'Hide'}{' '}
+          </button>}
+
     </div>
   );
 };
