@@ -1,6 +1,7 @@
 const LogOut = () => {
   return (
     <div>
+
       <button
         className="btn btn-danger logout"
         onClick={() => {

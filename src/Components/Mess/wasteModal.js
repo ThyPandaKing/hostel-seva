@@ -19,9 +19,19 @@ const WasteModal = ({modalVisibility, setModalVisibility, add}) => {
         return;
       }
 
+      const wasteNumber = Number (waste);
+
+      if (wasteNumber < 0) {
+        setWarning ({
+          msg: '* fill only positive number',
+          visible: true,
+        });
+        return;
+      }
       setModalVisibility (false);
       setWaste ('');
-      add (Number (waste));
+
+      add (wasteNumber);
     } catch (e) {
       setWarning ({
         msg: '* fill only as number',

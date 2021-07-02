@@ -5,7 +5,7 @@ import {EditScheduleData} from './EditScheduleData';
 
 import axios from 'axios';
 
-const Schedule = () => {
+const Schedule = ({isCurrentUserAllowed}) => {
   const [isScheduleShowing, setIsScheduleShowing] = useState (false);
   const [scheduleData, setScheduleData] = useState ([]);
   const [modalVisibility, setModalVisibility] = useState (false);
@@ -62,7 +62,9 @@ const Schedule = () => {
 
   return (
     <div className="container p-2">
-      <h2>Schedule</h2>
+      <p className="text-dark display-5">
+        Schedule
+      </p>
       <hr />
       <div
         style={{
@@ -96,12 +98,12 @@ const Schedule = () => {
         {!isScheduleShowing ? 'Show-Schedule' : 'Hide'}
       </button>
       <EditScheduleData
-        scheduleData = {scheduleData}
+        scheduleData={scheduleData}
         handleItemEdit={handleItemEdit}
         modalVisibility={modalVisibility}
         setModalVisibility={setModalVisibility}
       />
-      {isScheduleShowing
+      {isScheduleShowing && isCurrentUserAllowed
         ? <button
             className="btn btn-primary m-2 float-right"
             onClick={() => setModalVisibility (true)}

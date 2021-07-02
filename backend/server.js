@@ -13,7 +13,6 @@ const MONGO_DB_URI = config.get ('MONGO_DB_URI');
 
 const User = require ('./models/user');
 
-
 // app.use(cors)
 // routers to handle different routes
 const homeRouter = require ('./routers/home');
@@ -31,27 +30,35 @@ const PORT = 3001;
 app.post ('/register', async (req, res) => {
   try {
     const {email, name, password} = req.body;
-    
+    let isAdmin = false;
+
     if (!name || !email || !password) {
       return res.send ('Fill All the details');
     }
 
-    
+    if (!email.endsWith ('@iittp.ac.in')) {
+      return res.send ('Only IIT Tirupati Domain allowed');
+    }
+
+    if (email === 'cs19b001@iittp.ac.in' || email === 'cs19b041@iitp.ac.in') {
+      isAdmin = true;
+    }
 
     const cryptPassword = await bcrypt.hash (password, 10);
 
-    const newUser = new User ({
+    const newUser = await new User ({
       emailId: email,
       name: name,
       password: cryptPassword,
+      isAdmin: isAdmin,
     });
 
-    newUser
-      .save ()
-      .then (res => console.log (res))
-      .catch (err => console.log(err), res.send ('User Already Exists'));
+    await newUser.save ().then (result => console.log (result)).catch (err => {
+      console.log (err);
+      res.send ('User Already Exists');
+    });
   } catch (err) {
-    console.log(err)
+    console.log (err);
   }
   res.send ('done');
 });
@@ -68,7 +75,12 @@ app.post ('/login', async (req, res) => {
         res.send ({
           msg: 'User Found',
           found: true,
-          user: user[0],
+          user: {
+            name: user[0].name,
+            _id: user[0]._id,
+            emailId: user[0].emailId,
+            isAdmin: user[0].isAdmin,
+          },
         });
       } else {
         res.send ({

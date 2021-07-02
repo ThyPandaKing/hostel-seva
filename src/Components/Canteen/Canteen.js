@@ -14,6 +14,7 @@ const Canteen = () => {
   const [CanteenItemList, setCanteenItemList] = useState ([]);
   const [editing, setEditing] = useState (false);
   const [editModalVisibility, setEditModalVisibility] = useState (false);
+  const [isCurrentUserAllowed, setIsCurrentUserAllowed] = useState (false);
 
   const [cart, totalPrice, AddItemToCart, RemoveItemFromCart] = useCart ({
     ItemList: CanteenItemList,
@@ -23,6 +24,12 @@ const Canteen = () => {
   const [menuSearch, setMenuSearch] = useState ('');
 
   useEffect (() => {
+    const user = JSON.parse (sessionStorage.getItem ('user'));
+
+    if (user.isAdmin) {
+      setIsCurrentUserAllowed (true);
+    }
+
     axios
       .get ('http://localhost:3001/canteen')
       .then (res => setCanteenItemList (res.data))
@@ -82,18 +89,27 @@ const Canteen = () => {
   };
 
   const handleEditorSave = () => {
-    setEditing (!editing);
+    if (isCurrentUserAllowed) {
+      setEditing (!editing);
+    }
   };
 
   return (
     <div className="container">
-      <h1>Canteen</h1>
+      <h1
+        className="text-dark display-3"
+        style={{display: 'flex', justifyContent: 'center'}}
+      >
+        Canteen
+      </h1>
       <hr />
-      <h3 className="m-2">
+
+      <h1 className="text-dark display-6 m-2">
         {' '}
         {totalPrice === 0 ? '' : `Total Price ${totalPrice}`}
         {' '}
-      </h3>
+
+      </h1>
       {cart.length !== 0 &&
         <div>
           <ShowItems
@@ -112,52 +128,58 @@ const Canteen = () => {
           add={handleAdd}
           initialData={{dish: '', cost: 0}}
         />
+        <h1 className="text-dark display-5 m-4">
+          Menu
+        </h1>
 
-        <div className="d-flex justify-content-between">
-          <h3>Menu</h3>
-          <div className="d-flex">
-            <button
-              className="btn btn-danger mx-2"
-              onClick={() => {
-                handleEditorSave ();
-              }}
-            >
-              {!editing ? 'Edit' : 'Done'}
-            </button>
-            {!editing
-              ? <input
-                  id="menuInput"
-                  type="text"
-                  placeholder="Search"
-                  className="p-1"
-                  onChange={e => {
-                    setMenuSearch (e.target.value);
-                  }}
-                  value={menuSearch}
-                />
-              : <Button
-                  variant="success"
-                  style={{padding: '0.3rem', margin: '0.1rem'}}
-                  onClick={() => setEditModalVisibility (true)}
-                >
-                  <AiFillPlusCircle />
-                </Button>}
-          </div>
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          {isCurrentUserAllowed
+            ? <button
+                className="btn btn-danger mx-2"
+                onClick={() => {
+                  handleEditorSave ();
+                }}
+              >
+                {!editing ? 'Edit' : 'Done'}
+              </button>
+            : <div />}
+          {!editing
+            ? <input
+                id="menuInput"
+                type="text"
+                placeholder="Search"
+                className="p-1"
+                onChange={e => {
+                  setMenuSearch (e.target.value);
+                }}
+                value={menuSearch}
+              />
+            : <Button
+                variant="success"
+                style={{padding: '0.3rem', margin: '0.1rem'}}
+                onClick={() => setEditModalVisibility (true)}
+              >
+                <AiFillPlusCircle />
+              </Button>}
         </div>
+
         <hr />
 
-        {CanteenItemList.filter (item =>
-          item.name.toLowerCase ().includes (menuSearch.toLowerCase ())
-        ).map (item => (
-          <CanteenMenu
-            key={item._id}
-            {...item}
-            AddItemToCart={AddItemToCart}
-            editing={editing}
-            remove={handleRemove}
-            edit={handleEdit}
-          />
-        ))}
+        <div className="bd-highlight overflow-y-scroll menu">
+
+          {CanteenItemList.filter (item =>
+            item.name.toLowerCase ().includes (menuSearch.toLowerCase ())
+          ).map (item => (
+            <CanteenMenu
+              key={item._id}
+              {...item}
+              AddItemToCart={AddItemToCart}
+              editing={editing}
+              remove={handleRemove}
+              edit={handleEdit}
+            />
+          ))}
+        </div>
       </div>
 
       <br />

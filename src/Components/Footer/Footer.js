@@ -1,4 +1,5 @@
-import "./Footer.css"
+import {Link} from 'react-router-dom';
+import './Footer.css';
 
 const Footer = () => {
   return (
@@ -13,16 +14,12 @@ const Footer = () => {
 
           <div className="col-md-2 mb-1">
             <h6 className="text-uppercase font-weight-bold">
-              <a
-                href="https://github.com/PandaKing9660/hostel-seva"
-                style={{
-                  color: 'aliceblue',
-                  textDecoration: 'none',
-                  cursor: 'pointer',
-                }}
+              <Link
+                to="/about-us"
+                style={{color: 'white', textDecoration: 'underline'}}
               >
                 About us
-              </a>
+              </Link>
             </h6>
           </div>
 
@@ -38,7 +35,16 @@ const Footer = () => {
             }}
           >
             <p>
-              Feel Free To Contribute{' '}
+              Feel Free To Contribute{' here :  '} <a
+                href="https://github.com/PandaKing9660/hostel-seva"
+                style={{
+                  color: 'aliceblue',
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                }}
+              >
+                repository link
+              </a>
             </p>
           </div>
 
@@ -51,12 +57,12 @@ const Footer = () => {
           color: 'aliceblue',
         }}
       >
-        Made For :
+        Made For : {' '}
         <a
           href="https://iittp.ac.in/"
-          style={{textDecoration: 'none', color: 'aliceblue'}}
+          style={{textDecoration: 'underline', color: 'aliceblue'}}
         >
-          {' '}IIT Tirupati
+          IIT Tirupati
         </a>
       </div>
 

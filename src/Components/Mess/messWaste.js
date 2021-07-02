@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Button, Accordion, Card, ProgressBar} from 'react-bootstrap';
 import WasteModal from './wasteModal';
 
-const MessWaste = ({foodWaste, addFoodWaste}) => {
+const MessWaste = ({foodWaste, addFoodWaste, isCurrentUserAllowed}) => {
   const latestWaste = foodWaste[0].waste;
   const [modalVisibility, setModalVisibility] = useState (false);
 
@@ -25,7 +25,10 @@ const MessWaste = ({foodWaste, addFoodWaste}) => {
         setModalVisibility={setModalVisibility}
         add={addFoodWaste}
       />
-      <h2>Waste-o-meter</h2>
+      <h1 className="text-dark display-5">
+        Waste-O-Meter{' '}
+      </h1>
+
       <hr />
       <ProgressBar
         now={latestWaste}
@@ -74,15 +77,15 @@ const MessWaste = ({foodWaste, addFoodWaste}) => {
           </Accordion.Collapse>
         </Card>
       </Accordion>
-
-      <Button
-        variant="primary"
-        className="m-3"
-        onClick={() => setModalVisibility (true)}
-      >
-        {' '}Add new update{' '}
-      </Button>
-
+      {isCurrentUserAllowed
+        ? <Button
+            variant="primary"
+            className="m-3"
+            onClick={() => setModalVisibility (true)}
+          >
+            {' '}Add new update{' '}
+          </Button>
+        : ''}
     </div>
   );
 };

@@ -6,11 +6,9 @@ import axios from 'axios';
 const ComplaintList = () => {
   const user = JSON.parse (sessionStorage.getItem ('user'));
   const [list, setList] = useState ([]);
-  
 
   const [loading, setLoading] = useState (true);
   const [selectedOption, setSelectedOption] = useState ('reverse-time-sort');
-  
 
   useEffect (
     () => {
@@ -26,16 +24,24 @@ const ComplaintList = () => {
     [selectedOption]
   );
 
-  
-
   return (
     <div className="m-2 p-10 bg-highlight">
-      <ComplaintFilters
-        setSelectedOption={setSelectedOption}
-      />
+      <h1
+        className="text-dark display-3"
+        style={{display: 'flex', justifyContent: 'center'}}
+      >
+        Complaint List
+      </h1>
+
+      <hr />
+
+      <ComplaintFilters setSelectedOption={setSelectedOption} />
+      <hr />
       {!loading
-        ? list.map (data => <ComplaintCard key={data._id} data={data} />)
-        : <h1>Loading....</h1>}
+        ? list.length > 0
+            ? list.map (data => <ComplaintCard key={data._id} data={data} />)
+            : <h2 className="display-5">no items 🙂</h2>
+        : <h2 className="display-5">Loading....</h2>}
     </div>
   );
 };

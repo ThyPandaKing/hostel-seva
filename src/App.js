@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import NavBar from './Components/Navigation/Navbar';
 import Home from './Components/Home/Home';
+import AboutUs from './Components/Home/AboutUs';
 import Mess from './Components/Mess/Mess';
 import Canteen from './Components/Canteen/Canteen';
 import Footer from './Components/Footer/Footer';
@@ -28,6 +29,9 @@ function App () {
         </PrivateRoute>
         <PrivateRoute exact path="/complaints">
           <ComplaintList />
+        </PrivateRoute>
+        <PrivateRoute exact path="/about-us">
+          <AboutUs />
         </PrivateRoute>
         <Route path="/login">
           <SignIn />
