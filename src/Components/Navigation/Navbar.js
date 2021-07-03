@@ -9,7 +9,7 @@ const NavBar = () => {
   return (
     <div>
       <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
-        <Link className="navbar-brand" to="/">Bhojan Seva</Link>
+        <Link className="navbar-brand" to="/">Hostel Seva</Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="Navbar" style={{width: '85%'}}>

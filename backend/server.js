@@ -4,12 +4,15 @@ const cors = require ('cors');
 const mongoose = require ('mongoose');
 const body_parser = require ('body-parser');
 const bcrypt = require ('bcrypt');
-const config = require ('config');
+
+const dotenv = require ('dotenv');
+
+dotenv.config ();
 
 app.use (body_parser.json ());
 app.use (cors ());
 
-const MONGO_DB_URI = config.get ('MONGO_DB_URI');
+const MONGO_DB_URI = process.env.MONGO_DB_URI;
 
 const User = require ('./models/user');
 
@@ -25,7 +28,7 @@ app.use ('/canteen', canteenRouter);
 app.use ('/mess', messRouter);
 app.use ('/complaints', complaintsRouter);
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.post ('/register', async (req, res) => {
   try {
